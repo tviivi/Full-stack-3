@@ -35,7 +35,7 @@ let persons = [
   })
 
   app.get('/info', (req, res) => {
-res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
+    res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
   })
 
   app.get('/persons/:id', (request, response) => {
@@ -47,6 +47,13 @@ res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
     } else {
         response.status(404).end()
     }
+  })
+
+  app.delete('/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    persons = persons.filter(person => person.id !== id)
+  
+    response.status(204).end()
   })
 
   const PORT = 3001
