@@ -63,9 +63,24 @@ let persons = [
   })
 
   app.post('/api/persons', (request, response) => {
-    const person = request.body
-    person.id = getRandomArbitrary(0, 5000)
-  
+    const body = request.body
+
+    if (body.name === undefined) {
+      return response.status(400).json({error: 'content missing'})
+    }
+    if (body.number === undefined) {
+      return response.status(400).json({error: 'content missing'})
+    }
+    if (persons.find(x => x.name === body.name) != null) {
+      return response.status(400).json({error: 'name must be unique'})
+    }
+
+    const person = {
+      name: body.name,
+      number: body.number,
+      id: getRandomArbitrary(0, 500)
+    }
+
     persons = persons.concat(person)
 
     response.json(person)
