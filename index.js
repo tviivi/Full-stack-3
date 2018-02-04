@@ -1,11 +1,17 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 const aika = Date()
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 let persons = [
     {
-      name: 'Arto Hellaaaaas',
+      name: 'Arto Hellas',
       number: '040-123456',
       id: 1
     },
@@ -54,6 +60,15 @@ let persons = [
     persons = persons.filter(person => person.id !== id)
   
     response.status(204).end()
+  })
+
+  app.post('/api/persons', (request, response) => {
+    const person = request.body
+    person.id = getRandomArbitrary(0, 5000)
+  
+    persons = persons.concat(person)
+
+    response.json(person)
   })
 
   const PORT = 3001
