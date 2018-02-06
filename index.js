@@ -3,7 +3,11 @@ const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
-app.use(morgan('tiny'))
+morgan.token('data', function (req, res) {
+  return (JSON.stringify({ "name": req.body.name, "number": req.body.number }))
+})
+
+app.use(morgan(':method :url :data :status :res[content-length] - :response-time ms'))
 app.use(bodyParser.json())
 
 const aika = Date()
