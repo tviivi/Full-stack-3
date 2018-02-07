@@ -55,7 +55,7 @@ let persons = [
     res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
   })
 
-  app.get('/persons/:id', (request, response) => {
+  app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id )
 
@@ -66,7 +66,7 @@ let persons = [
     }
   })
 
-  app.delete('/persons/:id', (request, response) => {
+  app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
   
