@@ -52,7 +52,7 @@ let persons = [
     res.json(persons)
   })
 
-  app.get('/info', (req, res) => {
+  app.get('api/info', (req, res) => {
     res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
   })
 
