@@ -3,6 +3,16 @@ const app = express()
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
+const mongoose = require('mongoose')
+
+const url = 'mongodb://fullstack:*****@ds229448.mlab.com:29448/puhelinluettelo'
+
+mongoose.connect(url)
+
+const Person = mongoose.model('Person', {
+  name: String,
+  number: String
+})
 
 app.use(cors())
 
@@ -13,6 +23,14 @@ morgan.token('data', function (req, res) {
 app.use(morgan(':method :url :data :status :res[content-length] - :response-time ms'))
 app.use(bodyParser.json())
 app.use(express.static('build'))
+
+const formatPerson = (person) => {
+  return {
+    name: person.name,
+    number: person.number,
+    id: person.id
+  }
+}
 
 const aika = Date()
 function getRandomArbitrary(min, max) {
@@ -44,12 +62,12 @@ let persons = [
     }
   ]
   
-  //app.get('/', (req, res) => {
-  //  res.send('<h1>Hello World!</h1>')
-  //})
-  
-  app.get('/api/persons', (req, res) => {
-    res.json(persons)
+  app.get('/api/persons', (request, response) => {
+    Person
+    .find({})
+    .then(persons => {
+      response.json(persons.map(formatPerson))
+    })
   })
 
   app.get('api/info', (req, res) => {
