@@ -12,6 +12,7 @@ morgan.token('data', function (req, res) {
 
 app.use(morgan(':method :url :data :status :res[content-length] - :response-time ms'))
 app.use(bodyParser.json())
+app.use(express.static('build'))
 
 const aika = Date()
 function getRandomArbitrary(min, max) {
