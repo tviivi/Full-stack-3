@@ -61,8 +61,8 @@ let persons = [
     })
   })
 
-  app.get('api/info', (req, res) => {
-    res.send(`puhelinluettelossa ${persons.length} henkilön tiedot <p>${aika}</p>`)
+  app.get('/api/info', (req, res) => {
+    res.send(`puhelinluettelossa ${(persons.map(formatPerson).length)-1} henkilön tiedot <p>${aika}</p>`)
   })
 
   app.get('/api/persons/:id', (request, response) => {
